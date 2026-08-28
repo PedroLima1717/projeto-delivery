@@ -1,24 +1,32 @@
+import { useState } from 'react';
 import ItemCardapio from './components/ItemCardapio';
 
 function App() {
+    const [itensCarrinho, setItensCarrinho] = useState(0);
+    const bancoDeDados = [
+        { id: 1, nome: 'X-Bacon Duplo', descricao: 'Duas carnes e muito bacon.', preco: 35.0 },
+        { id: 2, nome: 'Pizza Calabresa', descricao: 'Tamanho Média 8 pedaços.', preco: 45.0 },
+        { id: 3, nome: 'Suco de Laranja', descricao: 'Copo 500ml natural.', preco: 8.0 },
+        {
+            id: 4,
+            nome: 'Pudim Caseiro',
+            descricao: 'Fatia caprichada com calda extra.',
+            preco: 12.0,
+        },
+    ];
     return (
         <>
             <h1>Senai Delivery</h1>
-            <ItemCardapio
-                nome="Hamburguer de picanha"
-                descricao="Hamburguer com carne de picanha, queijo, alface e tomate"
-                preco={29.9}
-            />
-            <ItemCardapio
-                nome="Pizza Portuguesa"
-                descricao="Pizza com queijo muçarela, presunto, ovos cozidos, cebola, azeitonas, ervilhas"
-                preco={35.9}
-            />
-            <ItemCardapio
-                nome="Pastel de pizza"
-                descricao="Pastel com queijo muçarela, presunto, tomate, cebola fatiada e orégano"
-                preco={12.9}
-            />
+            <h3>🛒 Carrinho: {itensCarrinho} itens</h3>
+            {bancoDeDados.map((item) => (
+                <ItemCardapio
+                    key={item.id}
+                    nome={item.nome}
+                    descricao={item.descricao}
+                    preco={item.preco}
+                    adicionarItem={() => setItensCarrinho((itensAtuais) => itensAtuais + 1)}
+                />
+            ))}
         </>
     );
 }
