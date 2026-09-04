@@ -1,24 +1,44 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import ItemCardapio from './components/ItemCardapio';
 
 function App() {
     const [itensCarrinho, setItensCarrinho] = useState(0);
-    const bancoDeDados = [
-        { id: 1, nome: 'X-Bacon Duplo', descricao: 'Duas carnes e muito bacon.', preco: 35.0 },
-        { id: 2, nome: 'Pizza Calabresa', descricao: 'Tamanho Média 8 pedaços.', preco: 45.0 },
-        { id: 3, nome: 'Suco de Laranja', descricao: 'Copo 500ml natural.', preco: 8.0 },
-        {
-            id: 4,
-            nome: 'Pudim Caseiro',
-            descricao: 'Fatia caprichada com calda extra.',
-            preco: 12.0,
-        },
-    ];
+    const [cardapio, setCardapio] = useState([]);
+    useEffect(() => {
+        console.log('Conectando ao servidor...');
+        setTimeout(() => {
+            setCardapio([
+                {
+                    id: 101,
+                    nome: 'Combo Master',
+                    descricao: 'Dois lanches + refri 2L',
+                    preco: 65.0,
+                },
+                {
+                    id: 102,
+                    nome: 'Hambúrguer de Grão de Bico',
+                    descricao: 'Opção Vegana',
+                    preco: 28.0,
+                },
+                {
+                    id: 103,
+                    nome: 'Açaí na Tigela',
+                    descricao: '500ml com morango e leite condensado',
+                    preco: 18.0,
+                },
+            ]);
+        }, 2000);
+    }, []);
+
+    if (cardapio.length === 0) {
+        return <h2>Carregando restaurante...</h2>;
+    }
+
     return (
         <>
             <h1>Senai Delivery</h1>
             <h3>🛒 Carrinho: {itensCarrinho} itens</h3>
-            {bancoDeDados.map((item) => (
+            {cardapio.map((item) => (
                 <ItemCardapio
                     key={item.id}
                     nome={item.nome}
